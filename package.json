@@ -1,0 +1,76 @@
+{
+  "name": "@3edges/utils",
+  "version": "1.0.0",
+  "description": "Utilities for 3Edges.",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/nulli/prim-utils.git"
+  },
+  "keywords": [
+    "3edges",
+    "utilities",
+    "metering"
+  ],
+  "author": "alex@3edges.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://bitbucket.org/nulli/prim-utils/issues"
+  },
+  "homepage": "https://3edges.com",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm run build && git add ."
+    }
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc",
+    "dev": "nodemon src/index.ts",
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx --cache --fix",
+    "test": "NODE_ENV=test jest"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "__tests__/etc/config/dashboard.js"
+    ]
+  },
+  "devDependencies": {
+    "@aws-crypto/sha256-js": "^5.2.0",
+    "@aws-sdk/credential-provider-node": "^3.504.0",
+    "@aws-sdk/protocol-http": "^3.374.0",
+    "@aws-sdk/signature-v4": "^3.374.0",
+    "@babel/core": "^7.15.5",
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-typescript": "^7.16.7",
+    "@types/jest": "^27.4.1",
+    "@types/node": "^20.11.19",
+    "@types/react": "^18.2.66",
+    "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "@typescript-eslint/parser": "^7.0.2",
+    "dotenv": "^10.0.0",
+    "eslint": "^8.10.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-react": "^7.34.0",
+    "eslint-plugin-unicorn": "^41.0.0",
+    "eslint-plugin-unused-imports": "^3.1.0",
+    "eslint-stats": "^1.0.1",
+    "husky": "^3.0.8",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "axios": "^1.6.7",
+    "crypto-js": "^4.1.1",
+    "gremlin": "^3.7.1",
+    "jwk-to-pem": "^2.0.5",
+    "neo4j-driver": "^5.16.0",
+    "nodemon": "^3.1.0",
+    "prom-client": "^14.0.1",
+    "react-toastify": "^8.0.3"
+  }
+}

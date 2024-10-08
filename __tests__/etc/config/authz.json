@@ -1,0 +1,12 @@
+{
+    "prefix": "authz",
+    "DB_VERSION": "v5",
+    "apiKey": "1ee3b46b747f4bae8ec05e0cc75c486ea2a90df8aab64901bfeccdd2b76fb421cac4277ff0a040e0a0f2327b9ff9cca3",
+    "project": "prim-authorization",
+    "ENABLE_INTROSPECTION": "true",
+    "NAMING_PROPERTY": "username",
+    "NAME": "api-to5z8a2nqy-authz",
+    "DB_TYPE": "neo4j",
+    "ACCESS_TOKEN_TYPE": "opaque",
+    "EXTERNAL_PROVIDER": false
+}

@@ -1,0 +1,10 @@
+{
+    "prefix": "proxy",
+    "MAX_TROTTLE_COST": 12345678,
+    "ENABLE_INTROSPECTION": "true",
+    "clientNameGCP": "api-to5z8a2nqy",
+    "enableSchemaPersistence": "true",
+    "ENABLE_GRAPHQL_CACHE": false,
+    "DEFAULT_LIMIT": "20",
+    "REDIS_PORT": "6379"
+}

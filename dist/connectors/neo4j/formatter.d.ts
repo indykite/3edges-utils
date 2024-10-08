@@ -1,0 +1,13 @@
+import { QueryResult } from "neo4j-driver";
+export declare function formatOneResponseWithFields(res: QueryResult): any;
+export declare function formatOneResponse(res: QueryResult): any;
+export declare function formatArrayResponse(res: QueryResult): any[];
+export declare function formatArrayResponseForRecordsArray(records: any): any[];
+export declare function formatArrayResponseWithFields(res: QueryResult): any[];
+export declare function formatArrayResonseWithKeys(res: QueryResult): any[];
+export declare function formatCleanResponse(res: QueryResult): any[];
+export declare function formatSubscriptionResponse(res: QueryResult): any;
+export declare function formatArraySubscriptionResponse(res: QueryResult): any;
+export declare const formatResFromNeo4jResCount: (res: any) => any;
+export declare function formatOneResponseLabels(res: QueryResult): any;
+export declare function formatArrayResponseLabels(res: QueryResult): any[];
