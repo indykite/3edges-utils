@@ -355,6 +355,7 @@ const readConfigMap = async (dir) => {
         dataproxy: {},
         idp: {},
         authz: {},
+        authz_csp: {},
         dashboard: {}
     };
 
