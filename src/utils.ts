@@ -409,6 +409,7 @@ export const readConfigMapDir = async (dir = 'etc/config') => {
         let cm_dataproxy = properties.dataproxy
         let cm_idp = properties.idp
         let cm_authz = properties.authz
+        let cm_authz_csp = properties.authz_csp
         const cm_dashboard = properties.dashboard
 
         try {
@@ -425,6 +426,10 @@ export const readConfigMapDir = async (dir = 'etc/config') => {
 
         try {
             cm_authz = JSON.parse(properties.authz)
+        } catch { }
+
+        try {
+            cm_authz_csp = JSON.parse(properties.authz_csp)
         } catch {}
 
         return {
@@ -432,6 +437,7 @@ export const readConfigMapDir = async (dir = 'etc/config') => {
             dataproxy: cm_dataproxy,
             idp: cm_idp,
             authz: cm_authz,
+            authz_csp: cm_authz_csp,
             dashboard: cm_dashboard,
         }
     }
