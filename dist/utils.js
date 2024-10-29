@@ -333,6 +333,7 @@ const readConfigMap = (dir) => __awaiter(void 0, void 0, void 0, function* () {
         dataproxy: {},
         idp: {},
         authz: {},
+        authz_csp: {},
         dashboard: {}
     };
     try {
@@ -380,6 +381,7 @@ const readConfigMapDir = (dir = 'etc/config') => __awaiter(void 0, void 0, void 
         let cm_dataproxy = properties.dataproxy;
         let cm_idp = properties.idp;
         let cm_authz = properties.authz;
+        let cm_authz_csp = properties.authz_csp;
         const cm_dashboard = properties.dashboard;
         try {
             cm_default = JSON.parse(properties.default);
@@ -397,11 +399,16 @@ const readConfigMapDir = (dir = 'etc/config') => __awaiter(void 0, void 0, void 
             cm_authz = JSON.parse(properties.authz);
         }
         catch (_g) { }
+        try {
+            cm_authz_csp = JSON.parse(properties.authz_csp);
+        }
+        catch (_h) { }
         return {
             default: cm_default,
             dataproxy: cm_dataproxy,
             idp: cm_idp,
             authz: cm_authz,
+            authz_csp: cm_authz_csp,
             dashboard: cm_dashboard,
         };
     }

@@ -3,7 +3,10 @@ import neo4j from 'neo4j-driver';
 import { DbProperties } from './types';
 
 export const neo4jConnector = ({ host, database, username, password }: DbProperties): any => {
-    try {
+    try
+    {
+        console.log(1, { host, database, username, password });
+
         const driver = neo4j.driver(host, neo4j.auth.basic(username, password));
         return { driver, database };
     } catch (error: any) {
@@ -18,6 +21,7 @@ export const runQuery = async (connector, query, params) => {
     try {
         return await session.run(query, params);
     } catch (error) {
+        console.log(2, query, params);
         throw new Error(error);
     } finally {
         await session.close();

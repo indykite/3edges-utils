@@ -51,6 +51,7 @@ export declare const readConfigMapDir: (dir?: string) => Promise<{
     dataproxy: any;
     idp: any;
     authz: any;
+    authz_csp: any;
     dashboard: any;
 }>;
 export declare const updateConfigMapDir: (file: any, jsonData: any, asString?: boolean, dir?: string) => Promise<void>;

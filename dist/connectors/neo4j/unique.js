@@ -17,6 +17,7 @@ exports.close = exports.runQuery = exports.neo4jConnector = void 0;
 const neo4j_driver_1 = __importDefault(require("neo4j-driver"));
 const neo4jConnector = ({ host, database, username, password }) => {
     try {
+        console.log(1, { host, database, username, password });
         const driver = neo4j_driver_1.default.driver(host, neo4j_driver_1.default.auth.basic(username, password));
         return { driver, database };
     }
@@ -32,6 +33,7 @@ const runQuery = (connector, query, params) => __awaiter(void 0, void 0, void 0,
         return yield session.run(query, params);
     }
     catch (error) {
+        console.log(2, query, params);
         throw new Error(error);
     }
     finally {
