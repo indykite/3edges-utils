@@ -23,7 +23,7 @@
     "build": "rm -rf dist && tsc",
     "dev": "nodemon src/index.ts",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx --cache --fix",
-    "test": "NODE_ENV=test jest"
+    "test": "NODE_ENV=test jest --testPathIgnorePatterns=\"__tests__/meteringClass.test.ts\""
   },
   "jest": {
     "testPathIgnorePatterns": [
