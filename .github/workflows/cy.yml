@@ -1,0 +1,40 @@
+---
+name: CI/CD Pipeline
+
+"on":
+  push:
+    branches:
+      - "*"
+  pull_request:
+    branches:
+      - "*"
+
+jobs:
+  default-steps:
+    name: Install, Build, Lint, Test
+    runs-on: ubuntu-latest
+    environment: configuration
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+      - name: Run linting and tests
+        env:
+          DB_TYPE: ${{ vars.DB_TYPE }}
+          DB_VERSION: ${{ vars.DB_VERSION }}
+          DB_HOST: ${{ vars.DB_HOST }}
+          DB_USER: ${{ vars.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_NAME: ${{ vars.DB_NAME }}
+        run: |
+          npm run build
+          npm run test

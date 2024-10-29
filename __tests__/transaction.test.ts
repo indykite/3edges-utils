@@ -4,7 +4,6 @@ import { uniqueConnector, useTransaction } from "../src/connectors/neo4j";
 import { DbProperties } from "../src/connectors/neo4j/types";
 
 describe("Transaction class", () => {
-
     it("Running queries", async () => {
         const dbConfig = new DbConfiguration({
             // db
@@ -53,7 +52,6 @@ describe("Transaction class", () => {
         /* Example 2 - by useTransaction */
         /*********************************/
         const neo4jUseTransaction = useTransaction(DbConfigurationMgr.getInstance(dbConfig))
-
         let res3;
         try {
             res3 = await neo4jUseTransaction.runQuery("match (n) return n limit 10", {})
@@ -65,7 +63,6 @@ describe("Transaction class", () => {
             await neo4jUseTransaction.close()
         }
         // expect(res3.records.length).toBeGreaterThan(0);
-
 
         /**********************************/
         /* Example 3 - by uniqueConnector */
@@ -81,7 +78,8 @@ describe("Transaction class", () => {
         } finally {
             await uniqueConnector.close(neo4jUniqueConnector)
         }
-        // expect(res0.records.length).toBeGreaterThan(0);
+        expect(res0.records.length).toBeGreaterThan(0);
         // expect(res1.records.length).toBeGreaterThan(0);
+
     });
 });

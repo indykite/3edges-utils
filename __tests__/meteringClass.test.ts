@@ -14,7 +14,7 @@ describe("Test Metring Manager Class", () => {
     });
 });
 //---------------------------------------------------------
-describe ("Test counters", () => {
+describe("Test counters", () => {
     it ("Create Counters", async () => {
         mMgr.createCounter("cTest1", "Test counter 1");
         mMgr.createCounterWithLabels("cTest2", "Test counter 2", ["code"]);
@@ -42,7 +42,7 @@ describe ("Test counters", () => {
     });
 });
 //---------------------------------------------------------
-describe ("Test gauges", () => {
+describe("Test gauges", () => {
     it ("Create Gauges", async () => {
         mMgr.createGauge("gTest1", "Test gauge 1");
         mMgr.createGaugeWithLabels("gTest2", "Test gauge 2", ["system"]);
