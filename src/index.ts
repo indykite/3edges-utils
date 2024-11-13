@@ -32,7 +32,10 @@ class DbConfigurationMgr {
     public static getInstance(config: DbProperties) {
         if (DbConfigurationMgr._instance)
         {
-            if (config.host === (DbConfigurationMgr._instance as any).config.host && config.database === (DbConfigurationMgr._instance as any).config.database)
+            if (config.host === (DbConfigurationMgr._instance as any).config.host
+            && config.username === (DbConfigurationMgr._instance as any).config.username
+            && config.password === (DbConfigurationMgr._instance as any).config.password
+            && config.database === (DbConfigurationMgr._instance as any).config.database)
             {
                 return DbConfigurationMgr._instance;
             }
@@ -43,5 +46,5 @@ class DbConfigurationMgr {
     }
 }
 
-export { DbConfiguration, DbConfigurationMgr, DbProperties, MetricsMgr, cert, console, fn, memgraph, neo4j, neptune, toastify };
+export { cert, console, DbConfiguration, DbConfigurationMgr, DbProperties, fn, memgraph, MetricsMgr, neo4j, neptune, toastify };
 

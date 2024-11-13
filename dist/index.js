@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.toastify = exports.neptune = exports.neo4j = exports.memgraph = exports.fn = exports.console = exports.cert = exports.MetricsMgr = exports.DbConfigurationMgr = exports.DbConfiguration = void 0;
+exports.toastify = exports.neptune = exports.neo4j = exports.MetricsMgr = exports.memgraph = exports.fn = exports.DbConfigurationMgr = exports.DbConfiguration = exports.console = exports.cert = void 0;
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-unexpected-multiline */
 require("dotenv/config");
@@ -62,7 +62,10 @@ class DbConfigurationMgr {
     }
     static getInstance(config) {
         if (DbConfigurationMgr._instance) {
-            if (config.host === DbConfigurationMgr._instance.config.host && config.database === DbConfigurationMgr._instance.config.database) {
+            if (config.host === DbConfigurationMgr._instance.config.host
+                && config.username === DbConfigurationMgr._instance.config.username
+                && config.password === DbConfigurationMgr._instance.config.password
+                && config.database === DbConfigurationMgr._instance.config.database) {
                 return DbConfigurationMgr._instance;
             }
         }

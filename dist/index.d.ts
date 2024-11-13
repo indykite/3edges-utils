@@ -14,4 +14,4 @@ declare class DbConfigurationMgr {
     constructor(config: DbProperties);
     static getInstance(config: DbProperties): any;
 }
-export { DbConfiguration, DbConfigurationMgr, DbProperties, MetricsMgr, cert, console, fn, memgraph, neo4j, neptune, toastify };
+export { cert, console, DbConfiguration, DbConfigurationMgr, DbProperties, fn, memgraph, MetricsMgr, neo4j, neptune, toastify };
