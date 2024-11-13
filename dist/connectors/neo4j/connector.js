@@ -22,7 +22,10 @@ class Neo4jConnection {
     }
     static getConnectionInstance(config) {
         if (Neo4jConnection.instance) {
-            if (config.host === Neo4jConnection.instance.config.host && config.database === Neo4jConnection.instance.config.database) {
+            if (config.host === Neo4jConnection.instance.config.host
+                && config.username === Neo4jConnection.instance.config.username
+                && config.password === Neo4jConnection.instance.config.password
+                && config.database === Neo4jConnection.instance.config.database) {
                 return Neo4jConnection.instance;
             }
         }

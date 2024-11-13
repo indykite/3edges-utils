@@ -15,7 +15,11 @@ export class Neo4jConnection {
     public static getConnectionInstance(config: DbProperties): Neo4jConnection {
         if (Neo4jConnection.instance)
         {
-            if (config.host === (Neo4jConnection.instance as any).config.host && config.database === (Neo4jConnection.instance as any).config.database)
+            if (config.host === (Neo4jConnection.instance as any).config.host
+                && config.username === (Neo4jConnection.instance as any).config.username
+                && config.password === (Neo4jConnection.instance as any).config.password
+                && config.database === (Neo4jConnection.instance as any).config.database
+            )
             {
                 return Neo4jConnection.instance
             }
