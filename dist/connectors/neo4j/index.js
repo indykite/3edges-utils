@@ -38,7 +38,10 @@ class DatabaseManagement {
     }
     static getInstance(config) {
         if (DatabaseManagement._instance) {
-            if (config.host === DatabaseManagement._instance.config.host && config.database === DatabaseManagement._instance.config.database) {
+            if (config.host === DatabaseManagement._instance.config.host
+                && config.username === DatabaseManagement._instance.config.username
+                && config.password === DatabaseManagement._instance.config.password
+                && config.database === DatabaseManagement._instance.config.database) {
                 return DatabaseManagement._instance;
             }
         }

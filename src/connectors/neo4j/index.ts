@@ -15,7 +15,10 @@ export class DatabaseManagement {
     public static getInstance(config: DbProperties): DatabaseManagement {
         if (DatabaseManagement._instance)
         {
-            if (config.host === (DatabaseManagement._instance as any).config.host && config.database === (DatabaseManagement._instance as any).config.database)
+            if (config.host === (DatabaseManagement._instance as any).config.host
+                && config.username === (DatabaseManagement._instance as any).config.username
+                && config.password === (DatabaseManagement._instance as any).config.password
+                && config.database === (DatabaseManagement._instance as any).config.database)
             {
                 return DatabaseManagement._instance
             }
