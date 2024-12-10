@@ -20,6 +20,7 @@ const crypto_1 = __importDefault(require("crypto"));
 const crypto_js_1 = __importDefault(require("crypto-js"));
 require("dotenv/config");
 const fs_1 = __importDefault(require("fs"));
+const nodemailer_1 = __importDefault(require("nodemailer"));
 const path_1 = __importDefault(require("path"));
 const querystring_1 = __importDefault(require("querystring"));
 const console_1 = __importDefault(require("./console"));
@@ -182,37 +183,43 @@ const checkEmailFormat = (value) => (/^[\w.-]+@[\dA-Za-z-]+\.[\d.A-Za-z-]+$/gu).
 exports.checkEmailFormat = checkEmailFormat;
 const randomKey = () => `rKEY_${(0, exports.generateRandomString)()}`;
 exports.randomKey = randomKey;
-const sendEmailFunc = (secret, mailInfo) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
-    try {
-        const serviceOnline = yield axios_1.default.get(process.env.SEND_EMAIL_URL);
-        if (serviceOnline.status === 200 && secret) {
-            const params = {
-                from: {
-                    email: process.env.SEND_EMAIL_FROM,
-                    name: process.env.SEND_EMAIL_FROM_NAME
+const sendEmailFunc = (mailInfo) => __awaiter(void 0, void 0, void 0, function* () {
+    const { EMAIL_SERVER_API_SECRET, EMAIL_SERVER_EMAIL_FROM, EMAIL_SERVER_NAME_FROM, EMAIL_SERVER_SMTP, EMAIL_SERVER_API_KEY, EMAIL_SERVER_PORT } = process.env;
+    return new Promise((resolve, reject) => {
+        var _a;
+        try {
+            const transporter = nodemailer_1.default.createTransport({
+                host: EMAIL_SERVER_SMTP,
+                port: EMAIL_SERVER_PORT,
+                secure: (EMAIL_SERVER_PORT === "465"),
+                auth: {
+                    user: EMAIL_SERVER_API_KEY,
+                    pass: EMAIL_SERVER_API_SECRET,
                 },
-                to: {
-                    email: mailInfo.to.email,
-                    name: (_a = mailInfo.to) === null || _a === void 0 ? void 0 : _a.name
-                },
+            });
+            const mailOptions = {
+                from: `"${EMAIL_SERVER_NAME_FROM}" <${EMAIL_SERVER_EMAIL_FROM}>`,
+                to: `"${(_a = mailInfo.to) === null || _a === void 0 ? void 0 : _a.name}" <${mailInfo.to.email}>`,
                 subject: mailInfo.subject,
                 text: mailInfo.text,
-                html: mailInfo.html
+                html: mailInfo.html,
             };
-            yield axios_1.default.post(`${process.env.SEND_EMAIL_URL}/sendEmail`, params, {
-                headers: {
-                    'x-stats': crypto_js_1.default.AES.encrypt(secret, process.env.INTERNAL_SECRET),
-                    'x-server': crypto_js_1.default.AES.encrypt(process.env.SEND_EMAIL_SERVER, process.env.INTERNAL_SECRET)
+            console_1.default.log(`Sending email to "${mailInfo.to.email}" about "${mailInfo.subject}"`);
+            transporter.sendMail(mailOptions, (err) => __awaiter(void 0, void 0, void 0, function* () {
+                if (err) {
+                    console_1.default.log(err.message);
+                    resolve(false);
                 }
-            });
-            return true;
+                else {
+                    resolve(true);
+                }
+            }));
         }
-        return false;
-    }
-    catch (error) {
-        return false;
-    }
+        catch (error) {
+            console_1.default.log(error.message);
+            reject(false);
+        }
+    });
 });
 exports.sendEmailFunc = sendEmailFunc;
 const encryptSecretAES = (text, CLIENT_SECRET_ENC_KEY) => {
@@ -366,12 +373,12 @@ const readConfigMap = (dir) => __awaiter(void 0, void 0, void 0, function* () {
             try {
                 response[file.name] = JSON.parse(content);
             }
-            catch (_c) {
+            catch (_b) {
                 response[file.name] = content;
             }
         }));
     }
-    catch (_b) { }
+    catch (_a) { }
     return response;
 });
 const readConfigMapDir = (dir = 'etc/config') => __awaiter(void 0, void 0, void 0, function* () {
@@ -386,23 +393,23 @@ const readConfigMapDir = (dir = 'etc/config') => __awaiter(void 0, void 0, void 
         try {
             cm_default = JSON.parse(properties.default);
         }
-        catch (_d) { }
+        catch (_c) { }
         try {
             cm_dataproxy = JSON.parse(properties.dataproxy);
         }
-        catch (_e) { }
+        catch (_d) { }
         try {
             cm_idp = JSON.parse(properties.idp);
         }
-        catch (_f) { }
+        catch (_e) { }
         try {
             cm_authz = JSON.parse(properties.authz);
         }
-        catch (_g) { }
+        catch (_f) { }
         try {
             cm_authz_csp = JSON.parse(properties.authz_csp);
         }
-        catch (_h) { }
+        catch (_g) { }
         return {
             default: cm_default,
             dataproxy: cm_dataproxy,

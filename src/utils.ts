@@ -5,6 +5,7 @@ import crypto from "crypto";
 import CryptoJS from "crypto-js";
 import 'dotenv/config';
 import fs from "fs";
+import nodemailer from "nodemailer";
 import path from "path";
 import querystring from "querystring";
 import console from "./console";
@@ -179,39 +180,45 @@ export const checkEmailFormat = (value: string): boolean => (/^[\w.-]+@[\dA-Za-z
 
 export const randomKey = () => `rKEY_${generateRandomString()}`
 
-export const sendEmailFunc = async (secret, mailInfo: { to; subject; text; html }): Promise<any> => {
-    try {
-        const serviceOnline = await axios.get(process.env.SEND_EMAIL_URL)
+export const sendEmailFunc = async (mailInfo: { to; subject; text; html; }): Promise<any> =>
+{
+    const { EMAIL_SERVER_API_SECRET, EMAIL_SERVER_EMAIL_FROM, EMAIL_SERVER_NAME_FROM, EMAIL_SERVER_SMTP, EMAIL_SERVER_API_KEY, EMAIL_SERVER_PORT } = process.env
 
-        if (serviceOnline.status === 200 && secret) {
-            const params = {
-                from: {
-                    email: process.env.SEND_EMAIL_FROM,
-                    name: process.env.SEND_EMAIL_FROM_NAME
+    return new Promise((resolve, reject) => {
+        try {
+            const transporter = (nodemailer as any).createTransport({
+                host: EMAIL_SERVER_SMTP,
+                port: EMAIL_SERVER_PORT,
+                secure: (EMAIL_SERVER_PORT === "465"),
+                auth: {
+                user: EMAIL_SERVER_API_KEY,
+                pass: EMAIL_SERVER_API_SECRET,
                 },
-                to: {
-                    email: mailInfo.to.email,
-                    name: mailInfo.to?.name
-                },
+            });
+
+            const mailOptions = {
+                from: `"${EMAIL_SERVER_NAME_FROM}" <${EMAIL_SERVER_EMAIL_FROM}>`,
+                to: `"${mailInfo.to?.name}" <${mailInfo.to.email}>`,
                 subject: mailInfo.subject,
                 text: mailInfo.text,
-                html: mailInfo.html
-            }
+                html: mailInfo.html,
+            };
 
-            await axios.post(`${process.env.SEND_EMAIL_URL}/sendEmail`, params, {
-                headers: {
-                    'x-stats': CryptoJS.AES.encrypt(secret, process.env.INTERNAL_SECRET),
-                    'x-server': CryptoJS.AES.encrypt(process.env.SEND_EMAIL_SERVER, process.env.INTERNAL_SECRET)
+            console.log(`Sending email to "${mailInfo.to.email}" about "${mailInfo.subject}"`);
+
+            transporter.sendMail(mailOptions, async (err) => {
+                if (err) {
+                    console.log(err.message);
+                    resolve(false)
+                } else {
+                    resolve(true)
                 }
-            })
-
-            return true
+            });
+        } catch (error) {
+            console.log(error.message);
+            reject(false)
         }
-
-        return false
-    } catch (error) {
-        return false
-    }
+    });
 }
 
 export const encryptSecretAES = (text, CLIENT_SECRET_ENC_KEY) => {

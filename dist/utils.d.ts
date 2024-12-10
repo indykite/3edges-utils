@@ -26,7 +26,7 @@ export declare const getFormattedCookie: (cookies: any, key: any) => any;
 export declare const formatDate: (value: string) => string;
 export declare const checkEmailFormat: (value: string) => boolean;
 export declare const randomKey: () => string;
-export declare const sendEmailFunc: (secret: any, mailInfo: {
+export declare const sendEmailFunc: (mailInfo: {
     to;
     subject;
     text;
